@@ -261,7 +261,11 @@ function openFullscreen() {
     elem.msRequestFullscreen();
     document.getElementById('popup1').style.display = 'none';
   }
-}else{if(screen.availWidth<1390){$('#items').css({'margin-top':'-2vw'});$('.tag').css({'margin-top':'-2vw'})}}
+}
+if(screen.availWidth<1390){
+    $('#items').css({'margin-top':'-2vw'});
+    $('.tag').css({'margin-top':'-2vw'});
+}
 if(/iPad|iPhone|iPod/.test(navigator.userAgent)){document.getElementById('popup1').style.display = 'none';$('#items').css({'margin-top':'-2vw'});$('.tag').css({'margin-top':'-2vw'})}
 $( function() {
   
