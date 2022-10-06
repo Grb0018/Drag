@@ -277,7 +277,7 @@ $( function() {
   $('.grabPlace').draggable({helper:'clone'},
   {cursor: "grabbing"}
   );
-        $('.tPer').droppable(
+$('.tPer').droppable(
             {
                 accept: '.grabPer',
                 drop: function(ev,ui){
@@ -289,11 +289,14 @@ $( function() {
                         dropTrue = false;
                       } 
                     }
-                    if(dropTrue==true){
+                    if(dropTrue==true &&  $(ev.target).attr('d')!=='no'){
                       $(this).text(dropp);
+                      $(ev.target).attr('d','no')
+                      $(ui.draggable).css({'opacity':'0.6','color': '#0018169c'})
+                      $(ui.draggable).draggable({disabled:true});
                     } 
-                }
-            }
+                },
+            },
         )
         $('.tAni').droppable(
             {
@@ -307,8 +310,11 @@ $( function() {
                         dropTrue = false;
                       } 
                     }
-                    if(dropTrue==true){
+                    if(dropTrue==true &&  $(ev.target).attr('d')!=='no'){
                       $(this).text(dropp);
+                      $(ev.target).attr('d','no')
+                      $(ui.draggable).css({'opacity':'0.6','color': '#0018169c'})
+                      $(ui.draggable).draggable({disabled:true});
                     } 
                 }
             }
@@ -325,13 +331,16 @@ $( function() {
                         dropTrue = false;
                       } 
                     }
-                    if(dropTrue==true){
+                    if(dropTrue==true &&  $(ev.target).attr('d')!=='no'){
                       $(this).text(dropp);
-                    } 
+                      $(ev.target).attr('d','no')
+                      $(ui.draggable).css({'opacity':'0.6','color': '#0018169c'})
+                      $(ui.draggable).draggable({disabled:true});
+                    }  
                 }
             }
         )
-        $('.tPlace').droppable(
+                $('.tPlace').droppable(
             {
                 accept: '.grabPlace',
                 drop: function(ev,ui){
@@ -343,9 +352,12 @@ $( function() {
                         dropTrue = false;
                       } 
                     }
-                    if(dropTrue==true){
+                    if(dropTrue==true &&  $(ev.target).attr('d')!=='no'){
                       $(this).text(dropp);
-                    } 
+                      $(ev.target).attr('d','no')
+                      $(ui.draggable).css({'opacity':'0.6','color': '#0018169c'})
+                      $(ui.draggable).draggable({disabled:true});
+                    }  
                 }
             }
         )
