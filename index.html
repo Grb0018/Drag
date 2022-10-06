@@ -262,7 +262,7 @@ function openFullscreen() {
     document.getElementById('popup1').style.display = 'none';
   }
 }
-
+if(/iPad|iPhone|iPod/.test(navigator.userAgent)){document.getElementById('popup1').style.display = 'none';}
 $( function() {
   
     $('.grabPer').draggable({helper:'clone'},
