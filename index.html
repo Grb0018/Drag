@@ -1,6 +1,5 @@
 <html lang="en">
 <head>
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0">
@@ -8,9 +7,45 @@
   <script src="./jquery-ui.js"></script>
 
     <script src="touch.js"></script> 
-     
+     <script src="./cong.js" defer></script>
+     <link rel="stylesheet" href="style.css">
     <title>Interactive</title>
     <style>
+      .congrats {
+  position: absolute;
+  top: 140px;
+  width: 550px;
+  height: 100px;
+  padding: 20px 10px;
+  text-align: center;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+}
+
+h1 {
+  transform-origin: 50% 50%;
+  font-size: 50px;
+  font-family: 'Sigmar One', cursive;
+  cursor: pointer;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.blob {
+  height: 50px;
+  width: 50px;
+  color: #ffcc00;
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  z-index: 1;
+  font-size: 30px;
+  display: none;  
+}
       html{
         display: flex;
     align-items: center;
@@ -25,13 +60,14 @@
     margin: 0;
     overflow: hidden;
         }
-        #container{
+        #containers{
             display:block;
             width:100vw;
             height: 50vw;
             background-image: url(./img/3649732.jpg);
             background-size: 130vw;
             overflow: hidden;
+            
         }
         .head{width: 65vw;
     margin: 3vw 25vw;
@@ -100,11 +136,14 @@
     text-decoration: wavy;
     color: darkgreen;
   }
-        @media only screen and (max-width:1410px) {
-            #items{ margin-top: -2vw}
-            .tag{ margin-top: -2vw}
-        }
-        
+  #logo{
+    position: absolute;
+    width: 11vw;
+    top: 2vw;
+    right: 2vw;
+    user-select: none;
+    -webkit-user-drag: none;
+}
     @media only screen and (max-width:1000px) {
       
       #items{
@@ -122,11 +161,24 @@
       #container{
        
       }
+
     }
     </style>
 </head>
 <body>
-    <div id="container">
+    <div id="containers">
+    <img src="./img/Logo.jpg" id="logo">  
+      <div class="js-container container" style="top:0px !important;" id="jscon"></div>
+
+  <div id='cong' style="text-align:center;margin-top:30px;display:none;position:  fixed;width:100%;height:100%;top:20vw;left:0px;">
+    <div class="checkmark-circle">
+      <div class="background"></div>
+      <div class="checkmark draw"></div>
+    </div>
+    <h1 style="top: -8vw;font-size:3.5vw;">Congratulations!</h1>
+    <p> Well done!</p>
+    <button class="submit-btn" type="submit" onclick="location.reload()">Reset</button>
+  </div>  
       <div class="popup" id="popup1">
         <p>Interactive Lesson</p>
         <p style="margin-top:0">Want to continue on <b>mobile</b> device ?</p>
@@ -159,7 +211,7 @@
             <span class="grabThing" style= "padding-right: 1.4vw;
             position: relative;
             left: -3vw;
-            padding-top: 0.7vw;
+            padding-top: 0.6vw;
             width: max-content;
             display: inline-block;
             letter-spacing: -0.09vw;">cycle</span>
@@ -212,45 +264,6 @@
 
 <script>
 
-// document.body.onclick=()=>{
-//   if(parseInt(screen.availWidth) > parseInt(screen.availHeight)){
-//   function myFunction() {
-// let text = "Press a button!\nEither OK or Cancel.";
-// if (confirm(text) == true) {
-//   var elem = document.getElementById('container')
-//       function openFullscreen() {
-//   if (elem.requestFullscreen) {
-//     elem.requestFullscreen();
-//   } else if (elem.webkitRequestFullscreen) { /* Safari */
-//     elem.webkitRequestFullscreen();
-//   } else if (elem.msRequestFullscreen) { /* IE11 */
-//     elem.msRequestFullscreen();
-//   }
-// }
-
-//   openFullscreen();  
-//   document.body.onclick=()=>{}
-// } else {
-
-// }
-// }
-// myFunction()
-// }
-// }
-
-
-
-// jQuery.event.special.touchstart = {
-// setup: function(_, ns, handle ) {
-// if(ns.includes("no PreventDefault")) {
-// };
-// this.addEventListener("touchstart",
-// this.addEventListener("touchstart",
-// } else {
-// }
-// }
-// handle, { passive: false });
-// handle, { passive: true });
 
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
     document.getElementById('popup1').style.display = 'flex';}
@@ -267,11 +280,7 @@ function openFullscreen() {
     document.getElementById('popup1').style.display = 'none';
   }
 }
-if(screen.availWidth<1390){
-    $('#items').css({'margin-top':'-2vw'});
-    $('.tag').css({'margin-top':'-2vw'});
-}
-if(/iPad|iPhone|iPod/.test(navigator.userAgent)){document.getElementById('popup1').style.display = 'none';$('#items').css({'margin-top':'-2vw'});$('.tag').css({'margin-top':'-2vw'})}
+
 $( function() {
   
     $('.grabPer').draggable({helper:'clone'},
@@ -286,7 +295,7 @@ $( function() {
   $('.grabPlace').draggable({helper:'clone'},
   {cursor: "grabbing"}
   );
-$('.tPer').droppable(
+        $('.tPer').droppable(
             {
                 accept: '.grabPer',
                 drop: function(ev,ui){
@@ -300,6 +309,8 @@ $('.tPer').droppable(
                     }
                     if(dropTrue==true &&  $(ev.target).attr('d')!=='no'){
                       $(this).text(dropp);
+                      score++;
+                      chk()
                       $(ev.target).attr('d','no')
                       $(ui.draggable).css({'opacity':'0.6','color': '#0018169c'})
                       $(ui.draggable).draggable({disabled:true});
@@ -321,6 +332,8 @@ $('.tPer').droppable(
                     }
                     if(dropTrue==true &&  $(ev.target).attr('d')!=='no'){
                       $(this).text(dropp);
+                      score++;
+                      chk()
                       $(ev.target).attr('d','no')
                       $(ui.draggable).css({'opacity':'0.6','color': '#0018169c'})
                       $(ui.draggable).draggable({disabled:true});
@@ -342,6 +355,8 @@ $('.tPer').droppable(
                     }
                     if(dropTrue==true &&  $(ev.target).attr('d')!=='no'){
                       $(this).text(dropp);
+                      score++;
+                      chk()
                       $(ev.target).attr('d','no')
                       $(ui.draggable).css({'opacity':'0.6','color': '#0018169c'})
                       $(ui.draggable).draggable({disabled:true});
@@ -349,7 +364,7 @@ $('.tPer').droppable(
                 }
             }
         )
-                $('.tPlace').droppable(
+        $('.tPlace').droppable(
             {
                 accept: '.grabPlace',
                 drop: function(ev,ui){
@@ -363,6 +378,8 @@ $('.tPer').droppable(
                     }
                     if(dropTrue==true &&  $(ev.target).attr('d')!=='no'){
                       $(this).text(dropp);
+                      score++;
+                      chk()
                       $(ev.target).attr('d','no')
                       $(ui.draggable).css({'opacity':'0.6','color': '#0018169c'})
                       $(ui.draggable).draggable({disabled:true});
@@ -372,6 +389,21 @@ $('.tPer').droppable(
         )
         } );
 
+var score=0;
+function end(){
+  $('#items').css('display','none')
+  $('.openbook').fadeOut()
+  $('#jscon').css('display','block')
+  $('#jscon').css('backdrop-filter','blur(10px)')
+  $('#cong').css('display','block')
+ 
+  window.confettiful = new Confettiful(document.querySelector('.js-container'));
+}
+function chk(){
+  if(score>12){
+    setTimeout(()=>{end()},300)
+  }
+}
 </script>
 
 
